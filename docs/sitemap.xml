@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://suvadityamuk.com/index.html</loc>
+    <lastmod>2023-03-31T19:10:31.660Z</lastmod>
+  </url>
+  <url>
+    <loc>https://suvadityamuk.com/posts/2022-08-05-the-annotated-resnet.html</loc>
+    <lastmod>2023-03-31T19:10:32.402Z</lastmod>
+  </url>
+  <url>
+    <loc>https://suvadityamuk.com/posts/2022-09-05-how-to-make-your-models-available-to-the-public.html</loc>
+    <lastmod>2023-03-31T19:10:32.972Z</lastmod>
+  </url>
+  <url>
+    <loc>https://suvadityamuk.com/posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html</loc>
+    <lastmod>2023-03-31T19:10:34.134Z</lastmod>
+  </url>
+  <url>
+    <loc>https://suvadityamuk.com/about.html</loc>
+    <lastmod>2023-03-31T19:10:34.406Z</lastmod>
+  </url>
+  <url>
+    <loc>https://suvadityamuk.com/talks.html</loc>
+    <lastmod>2023-03-31T19:10:34.656Z</lastmod>
+  </url>
+</urlset>

@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.299">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Suvaditya Mukherjee">
+<meta name="dcterms.date" content="2023-01-03">
+<meta name="description" content="Getting started with using Docker and TF Serving on GCP">
+
+<title>Suvaditya Mukherjee | suvadityamuk - Accelerating Model Deployment using Transfer Learning and Vertex AI</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Suvaditya Mukherjee | suvadityamuk</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../talks.html" rel="" target="">
+ <span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/suvadityamuk" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/halcyonrayes" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/suvadityamukherjee" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Accelerating Model Deployment using Transfer Learning and Vertex AI</h1>
+                  <div>
+        <div class="description">
+          Getting started with using Docker and TF Serving on GCP
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">mlops</div>
+                <div class="quarto-category">docker</div>
+                <div class="quarto-category">computer-vision</div>
+                <div class="quarto-category">ai</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Suvaditya Mukherjee </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 3, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#table-of-contents" id="toc-table-of-contents" class="nav-link" data-scroll-target="#table-of-contents">Table of Contents</a>
+  <ul class="collapse">
+  <li><a href="#training" id="toc-training" class="nav-link" data-scroll-target="#training">Training</a></li>
+  <li><a href="#deployment" id="toc-deployment" class="nav-link" data-scroll-target="#deployment">Deployment</a></li>
+  </ul></li>
+  <li><a href="#training-1" id="toc-training-1" class="nav-link" data-scroll-target="#training-1">Training</a>
+  <ul class="collapse">
+  <li><a href="#step-1-what-are-keras.applications-and-hugging-face" id="toc-step-1-what-are-keras.applications-and-hugging-face" class="nav-link" data-scroll-target="#step-1-what-are-keras.applications-and-hugging-face">Step 1: What are keras.applications and Hugging Face?</a></li>
+  <li><a href="#step-2-how-to-use-pre-trained-models" id="toc-step-2-how-to-use-pre-trained-models" class="nav-link" data-scroll-target="#step-2-how-to-use-pre-trained-models">Step 2: How to use pre-trained models?</a></li>
+  </ul></li>
+  <li><a href="#demo-using-it-to-make-a-customized-pre-trained-model" id="toc-demo-using-it-to-make-a-customized-pre-trained-model" class="nav-link" data-scroll-target="#demo-using-it-to-make-a-customized-pre-trained-model">Demo: Using it to make a customized pre-trained model</a></li>
+  <li><a href="#deployment-1" id="toc-deployment-1" class="nav-link" data-scroll-target="#deployment-1">Deployment</a>
+  <ul class="collapse">
+  <li><a href="#step-3-use-tensorflow-serving-and-savedmodel" id="toc-step-3-use-tensorflow-serving-and-savedmodel" class="nav-link" data-scroll-target="#step-3-use-tensorflow-serving-and-savedmodel">Step 3: Use TensorFlow Serving and SavedModel</a></li>
+  <li><a href="#step-4-export-savedmodel-to-docker-image" id="toc-step-4-export-savedmodel-to-docker-image" class="nav-link" data-scroll-target="#step-4-export-savedmodel-to-docker-image">Step 4: Export SavedModel to Docker Image</a></li>
+  <li><a href="#step-5-create-vertex-ai-model-and-endpoints" id="toc-step-5-create-vertex-ai-model-and-endpoints" class="nav-link" data-scroll-target="#step-5-create-vertex-ai-model-and-endpoints">Step 5: Create Vertex AI Model and Endpoints</a></li>
+  <li><a href="#put-image-into-artifact-registry" id="toc-put-image-into-artifact-registry" class="nav-link" data-scroll-target="#put-image-into-artifact-registry">1. Put image into Artifact Registry</a></li>
+  <li><a href="#create-vertex-ai-model-resource" id="toc-create-vertex-ai-model-resource" class="nav-link" data-scroll-target="#create-vertex-ai-model-resource">2. Create Vertex AI Model resource</a></li>
+  <li><a href="#create-vertex-ai-endpoint-resource" id="toc-create-vertex-ai-endpoint-resource" class="nav-link" data-scroll-target="#create-vertex-ai-endpoint-resource">3. Create Vertex AI Endpoint resource</a></li>
+  <li><a href="#step-6-perform-testing-and-inference" id="toc-step-6-perform-testing-and-inference" class="nav-link" data-scroll-target="#step-6-perform-testing-and-inference">Step 6: Perform Testing and Inference</a></li>
+  <li><a href="#predictions" id="toc-predictions" class="nav-link" data-scroll-target="#predictions">Predictions :</a></li>
+  </ul></li>
+  <li><a href="#what-have-we-accomplished" id="toc-what-have-we-accomplished" class="nav-link" data-scroll-target="#what-have-we-accomplished">What have we accomplished?</a></li>
+  <li><a href="#where-to-go-from-here" id="toc-where-to-go-from-here" class="nav-link" data-scroll-target="#where-to-go-from-here"><strong>Where to go from here?</strong></a></li>
+  <li><a href="#reference-documents" id="toc-reference-documents" class="nav-link" data-scroll-target="#reference-documents"><strong>Reference Documents</strong></a></li>
+  <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments"><strong>Acknowledgments</strong></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>As the field of Machine Learning progresses, the requirement for sharing your progress with the world increases exponentially. This holds true especially for early/mid-stage ML startups that are looking to get their product across to potential users as soon as possible while being able to maintain the load in a performant as well as cost-effective way.</p>
+<p>This includes being able to leverage the latest research, as well as handling a ton of DevOps aspects related to maintaining the services provided. Along with that, preparing and deploying the models that have been developed in-house as a SaaS offering becomes a critical step in the complete pipeline.</p>
+<p>In this article, I will be giving a brief introduction to how one can make use of pre-trained models available for free on the internet, consume and mold them to a specific use-case and then deploy it using TensorFlow Serving, Docker and Google Cloud’s Vertex AI.</p>
+<p>This article assumes that you have a working knowledge of how Neural Networks work, how Docker works and what TensorFlow is. If you do not have the pre-requisite knowledge or require a refresher, consider going through the following resources:</p>
+<ul>
+<li><a href="https://docs.docker.com/get-started/overview/">How Docker Works</a></li>
+<li><a href="https://www.tensorflow.org/">What is TensorFlow</a></li>
+<li><a href="https://news.mit.edu/2017/explained-neural-networks-deep-learning-0414">How Neural Networks work</a></li>
+</ul>
+<p>This article is an addition to the slides, talk, and code presented as part of my presentation at GDG DevFest Raipur 2022 for the topic with the same title.</p>
+<p>You can find the <a href="http://bit.ly/tf-vertex-ai">slides</a> here, and the <a href="https://github.com/suvadityamuk/Devfest-Raipur-22">code</a> here.</p>
+</section>
+<section id="table-of-contents" class="level2">
+<h2 class="anchored" data-anchor-id="table-of-contents">Table of Contents</h2>
+<p>This article can be divided into 2 stages.</p>
+<section id="training" class="level3">
+<h3 class="anchored" data-anchor-id="training">Training</h3>
+<ul>
+<li><p>Step 1: What are keras.applications and Hugging Face?</p></li>
+<li><p>Step 2: How to use pre-trained models?</p></li>
+<li><p>Example: Using it to make a customized pre-trained model</p></li>
+</ul>
+</section>
+<section id="deployment" class="level3">
+<h3 class="anchored" data-anchor-id="deployment">Deployment</h3>
+<ul>
+<li><p>Step 3: Use TensorFlow Serving and SavedModel</p></li>
+<li><p>Step 4: Export SavedModel to Docker Image</p></li>
+<li><p>Step 5: Create Vertex AI Model and Endpoints</p></li>
+<li><p>Step 6: Perform Testing and Inference</p></li>
+</ul>
+</section>
+</section>
+<section id="training-1" class="level2">
+<h2 class="anchored" data-anchor-id="training-1">Training</h2>
+<section id="step-1-what-are-keras.applications-and-hugging-face" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-what-are-keras.applications-and-hugging-face">Step 1: What are keras.applications and Hugging Face?</h3>
+<p>Pre-trained models are specific Deep-Learning models that have been trained on a certain dataset of a given task and are available freely on the internet. These models have weights for the network hosted in a way that they can be retrieved. If the user requires, they can also fine-tune the weights by initializing the model and training, using the pre-trained model as a starting point compared to using Random initialization.</p>
+<p>The process of taking pre-trained models and fine-tuning them or using them on a different task than the one they were originally trained for, is known as Transfer Learning.</p>
+<p>But where do you find these models?</p>
+<ul>
+<li><strong>TensorFlow-Keras ecosystem</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/0*CU_rXCNSYjY5QMHg.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p>One of the most mature ecosystems for pre-trained models is available using the keras.applications Module or using <a href="https://tfhub.dev/">TensorFlow Hub</a>. <a href="https://www.tensorflow.org/api_docs/python/tf/keras/applications"><code>keras.applications</code></a> contains a total of 38 Vision models pre-trained on the ImageNet dataset by the team behind Keras. They also provide a table that details statistics like the number of parameters within the model as well as benchmarks like inference latency on a general configuration. These models are extensively used and are available free of charge.</p>
+<p>Through this, you don’t need to just get inferences. You can get everything in between, be it feature-vectors or fine-tuned models, or even just the base model that can perform inference for ImageNet classes.</p>
+<p>If it seems suitable to your use case, you can even convert these models to <a href="https://www.tensorflow.org/lite">TFLite</a> and deploy them to edge devices (provided the number of parameters is under a certain threshold to ensure support).</p>
+<p>As Keras keeps on adding support for newer models, you can also check out the supplementary packages of <a href="https://keras.io/keras_cv/">KerasCV</a> and <a href="https://keras.io/keras_nlp/">KerasNLP</a>. They contain a larger set of more exotic models along with their pre-trained weights. <a href="https://keras.io/guides/keras_cv/generate_images_with_stable_diffusion/">(You can even try out the latest Stable Diffusion model directly from KerasCV)</a>. If that doesn’t fulfill your needs either, you can turn to community-supported and provided models made available via TensorFlow Hub. Folks from the community make implementations of different models using TensorFlow/Keras, train them and provide them through this centralized Hub.</p>
+<ul>
+<li><strong>Hugging Face ecosystem</strong></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:640/0*XLwV1E-sfEYxf32h.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p><a href="https://huggingface.co/">Hugging Face</a> is easily one of the largest, if not the largest host of models on the internet. With over 100,000 models available, there is a low chance that your use case cannot be fulfilled by a model from here. These models are contributed by the community, small-scale teams, large-scale enterprises, and everything in between.</p>
+<p>Enterprises like Google, Microsoft, and Facebook also release pre-trained weights for their latest models from their research teams here. This gives you access to cutting-edge models in a simple manner and without much overhead.</p>
+<p>Moreover, you get this access for free (while a paid service exists for accessing better compute).</p>
+<p>The ecosystem also provides support for ancillary tasks around ML, like Accelerate (for training pipeline setups), Diffusers (for working with Diffusion Models), Datasets (for accessing the latest datasets), and Spaces (for hosting your models) along with many more.</p>
+</section>
+<section id="step-2-how-to-use-pre-trained-models" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-how-to-use-pre-trained-models">Step 2: How to use pre-trained models?</h3>
+<p>Below are code samples for how you can make pre-trained models from each of the ecosystems mentioned above:</p>
+<ul>
+<li><code>keras.applications</code> - Getting a <a href="https://towardsdatascience.com/the-annotated-resnet-50-a6c536034758">ResNet-50 model</a></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.applications.resnet50 <span class="im">import</span> ResNet50, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>preprocess_input, decode_predictions</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ResNet50(weights<span class="op">=</span><span class="st">'imagenet'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> preprocess_input(image)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> model.predict(x)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> decode_predictions(preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the example above, we perform the following operations:</p>
+<ol type="1">
+<li>We perform the necessary imports and get the ResNet50 model and its helper functions (present within the same submodule) from <code>keras.applications</code> into the environment.</li>
+<li>We initialize the ResNet50 Model with the weights used being the ones from ImageNet pre-training.</li>
+<li>The <code>keras.applications.ResNet50</code> model requires all images passed as input to be in a certain format. Hence, we must use the built-in <code>preprocess_input</code> function to make the changes.</li>
+<li>We perform inference by passing our preprocessed input image to the <code>model.predict()</code> function to get predictions.</li>
+<li>Since the predictions are generated in the form of a confidence score along with the classes (where the class names are label-encoded), we make use of the <code>decode_predictions()</code> function to make sense of the output we received.</li>
+</ol>
+<ul>
+<li>TensorFlow Hub: Getting the MLP Mixer model for generating Feature vectors</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>input_layer <span class="op">=</span> keras.Input(shape<span class="op">=</span>(<span class="dv">224</span>, <span class="dv">224</span>, <span class="dv">3</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>hub_layer <span class="op">=</span> hub.KerasLayer(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://tfhub.dev/sayakpaul/mixer_b16_i21k_fe/1"</span>, trainable<span class="op">=</span><span class="va">True</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> hub_layer(input_layer)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>output_layer <span class="op">=</span> keras.layers.Dense(num_classes, activation<span class="op">=</span>’softmax’)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> keras.Model(inputs<span class="op">=</span>input_layer, outputs<span class="op">=</span>output_layer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the example above, we instantiate a model using the Keras Functional API. In this, we perform the following steps:</p>
+<ol type="1">
+<li>Define a <code>keras.Input</code> layer that acts as an entry-point for the input tensor. Here, we define a shape that we can expect the input tensor to be.</li>
+<li>We make use of the <code>tensorflow_hub</code> package and import the model we want to use as a <code>hub.KerasLayer</code> that downloads the model architecture and its trained weights for use.</li>
+<li>We pass the input tensor to the layer we just made to perform a forward pass.</li>
+<li>We add a <code>keras.layers.Dense</code> layer with the number of units equal to the number of classes, to generate softmax predictions.</li>
+<li>Finally, we initialize a <code>keras.Model</code> instance with the chosen input and output layers in order to create the final model. This is the method of instantiating Functional API-based models for Keras.</li>
+</ol>
+<ul>
+<li>Hugging Face ( transformers ): Getting the ViT model for 224 x 224 x 3 images</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> ViTForImageClassification, ViTImageProcessor</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>feature_extractor <span class="op">=</span> ViTImageProcessor.from_pretrained(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"google/vit-base-patch16-224"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> feature_extractor(image, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span>  ViTForImageClassification.from_pretrained(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"google/vit-base-patch16-224"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    logits <span class="op">=</span> model(<span class="op">**</span>inputs).logits</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>predicted_label <span class="op">=</span> logits.argmax(<span class="op">-</span><span class="dv">1</span>).item()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the example above, we make use of PyTorch instead of TensorFlow. We perform the following steps:</p>
+<ol type="1">
+<li>We perform necessary imports to get the ViT model and its required Image processing helper functions.</li>
+<li>We instantiate the ViTImageProcessor from the pre-trained weights as provided by the repository owner (in this case, Google).</li>
+<li>We pass our image into the feature extractor to get our images formatted and ready for inference. ViT models require images to be passed in the form of uniform patches. This specific model requires your image to be of size 224 x 224 x 3 along with each patch being 16 x 16 in size.</li>
+<li>We instantiate the ViTForImageClassification model and use the pre-trained weights from the same repository.</li>
+<li>We use torch.no_grad() to make sure that gradients are not calculated for forward passes within the defined scope. This is for generating predictions. The predictions come as confidence scores for all possible classes. We perform an argmax() over the entire output tensor to get the highest resultant class and use it as the final prediction.</li>
+</ol>
+</section>
+</section>
+<section id="demo-using-it-to-make-a-customized-pre-trained-model" class="level2">
+<h2 class="anchored" data-anchor-id="demo-using-it-to-make-a-customized-pre-trained-model">Demo: Using it to make a customized pre-trained model</h2>
+<p>Now, we make use of a customized model in the form of a demo that we will use ahead in the latter part of the article as well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To force inference using CPU only</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"CUDA_VISIBLE_DEVICES"</span>] <span class="op">=</span> <span class="st">"-1"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Model definition</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>image_input <span class="op">=</span> keras.Input(shape<span class="op">=</span>(<span class="va">None</span>, <span class="va">None</span>, <span class="dv">3</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Defining a resize Layer</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> keras.layers.Resizing(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>   height<span class="op">=</span><span class="dv">224</span>, width<span class="op">=</span><span class="dv">224</span>, interpolation<span class="op">=</span><span class="st">"lanczos3"</span>, crop_to_aspect_ratio<span class="op">=</span><span class="va">False</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>)(image_input)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a Rescaling layer to get image pixel values from [0, 255] to [0, 1)</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> keras.layers.Rescaling(scale<span class="op">=</span><span class="fl">1.0</span> <span class="op">/</span> <span class="dv">255</span>, offset<span class="op">=</span><span class="fl">0.0</span>)(x)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate a MobileNetV2 instance with pre-trained weights and the </span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Dense classifier being trained for ImageNet classes</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>mobilenet <span class="op">=</span> keras.applications.MobileNetV2(</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>   alpha<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>   include_top<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>   weights<span class="op">=</span><span class="st">"imagenet"</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>   classes<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>   classifier_activation<span class="op">=</span><span class="st">"softmax"</span>,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Passing input tensor for results</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>model_output <span class="op">=</span> mobilenet(x)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Make Keras Model</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> keras.Model(inputs<span class="op">=</span>image_input, outputs<span class="op">=</span>model_output)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this section, we have explored how we can make use of several different online services to access pre-trained models that allow us to move forward with developing on top of pre-existing work without requiring heavy Compute.</p>
+<p>But this was only about the development of the solution. How do we actually get it out for the world to use?</p>
+</section>
+<section id="deployment-1" class="level2">
+<h2 class="anchored" data-anchor-id="deployment-1">Deployment</h2>
+<section id="step-3-use-tensorflow-serving-and-savedmodel" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-use-tensorflow-serving-and-savedmodel">Step 3: Use TensorFlow Serving and SavedModel</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/0*q2lsO0XuTx1f-Ria.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p><a href="https://www.tensorflow.org/tfx/guide/serving">TensorFlow Serving</a> is part of the larger TFX (TensorFlow Extended) ecosystem that helps users develop full production-scale pipelines. TF-Serving is a low-latency, high-throughput system that is flexible enough to allow a large array of options.</p>
+<p>While more straightforward solutions exist to deploy models, like using <a href="https://flask.palletsprojects.com/">Flask</a> or <a href="https://www.djangoproject.com/">Django</a>, that would require you to write and maintain a lot of boilerplate along with performing maintenance, error-handling, and edge-case handling for the framework involved. With TF-Serving, all of that is abstracted away.</p>
+<p>Another important fact is that TF-Serving is fully compatible with containerization, leading to no worries about packages, compatibility, dependency issues, and so on.</p>
+<p>From here on forward, the example we have developed previously is what we will continue to use for the deployment experiment.</p>
+<p>Below, we first write an inference function. This function will be used by TensorFlow Serving to process input and give results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>version_number <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="at">@tf.function</span>(input_signature<span class="op">=</span>[tf.TensorSpec(name<span class="op">=</span><span class="st">"image_bytes"</span>, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  shape<span class="op">=</span><span class="va">None</span>, dtype<span class="op">=</span>tf.string)])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_b64_string(b64str_tensor):</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   img <span class="op">=</span> tf.reshape(b64str_tensor, [])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   img <span class="op">=</span> tf.io.decode_image(img, </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      channels<span class="op">=</span><span class="dv">3</span>, </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      dtype<span class="op">=</span>tf.float16, </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      expand_animations<span class="op">=</span><span class="va">False</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>   tensor <span class="op">=</span> tf.expand_dims(img, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> model.call(tensor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the above snippet, we define <code>version_number</code> for TF-Serving to maintain version control of the different models present together.</p>
+<p>The <a href="https://www.tensorflow.org/api_docs/python/tf/function"><code>tf.function()</code></a> decorator is perhaps the most important line of code in the above snippet. This decorator will perform a tracing of the function and generate a computation graph for it. As a default, TensorFlow 2.0 defaults to Eager Execution to allow for better debugging. But the most performant way of execution is in the Graph mode. This decorator will trigger the heavy lifting and prepare the function in a language-agnostic definition. Here, we define a <a href="https://www.tensorflow.org/api_docs/python/tf/TensorSpec"><code>tf.TensorSpec</code></a> that allows us to define the kind of Input Tensor the function should expect. That means we will accept an input consisting of the bytes of the image in the form of a Base64 string.</p>
+<p>We then perform the simple operations of decoding the image, preparing the tensor by batching it, and performing a forward class to generate results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model.save(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="ss">f'./mobilenetv2-imagenet-devfest/</span><span class="sc">{</span>version_number<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>   save_format<span class="op">=</span><span class="st">'tf'</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>   include_optimizer<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>   overwrite<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>   signatures<span class="op">=</span>{</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>       <span class="st">"serving_image_b64string"</span>:predict_b64_string</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here, we call the <code>model.save()</code> a function that is integral to the deployment process. It requires the following arguments:</p>
+<ol type="1">
+<li>File path: TF-Serving requires you to save it in the format of <code>{model_name}/{version_number}</code>.</li>
+<li>Save Format: Setting this to <code>'tf'</code> will save the model as a Keras <a href="https://www.tensorflow.org/guide/saved_model"><code>SavedModel</code></a> , helping you to save model metadata, custom functions, weights, optimizer states, and so on. This is required for TF-Serving because the model will be run in Graph mode only.</li>
+<li>Include Optimizer: Choose whether to include the optimizer state in the saved package</li>
+<li>Overwrite: Choose whether to overwrite old data that may be present in the same file destination</li>
+<li>Signatures: Here, we must define the function that should be used by TF-Serving to create the model endpoint and subsequently use it for inference. Here we give a name to the signature and pass the function object to it in the form of a dictionary</li>
+</ol>
+</section>
+<section id="step-4-export-savedmodel-to-docker-image" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-export-savedmodel-to-docker-image">Step 4: Export SavedModel to Docker Image</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~ ]$ docker run <span class="at">-d</span> <span class="at">--name</span> serving_base tensorflow/serving</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~ ]$ docker cp /absolute/path/to/saved_model/model_name <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>serving_base:/models/model_name</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~ ]$ docker commit <span class="at">--change</span> “ENV MODEL_NAME model_name” <span class="dt">\ </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">serving_base</span> devfest-mobilenet-demo</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~ ]$ docker run <span class="at">-t</span> <span class="at">-p</span> 8501:8501 devfest-mobilenet-demo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The code snippet above is a series of Docker commands that will perform the following steps:</p>
+<ul>
+<li>We first create a dummy container that is initialized using the tensorflow/serving image present on Docker Hub. We run it in a detached mode.</li>
+<li>We give a cp instruction that will copy the contents from a source to the target directory for the Dockerfile of the image. Here, we copy the contents of the SavedModel file structure to a path in the container’s file system where TF-Serving expects your model’s files to be.</li>
+<li>We commit the changes made to the Dockerfile, insert a new Environment variable for the container, and give a new name to this changed Dockerfile as devfest-mobilenet-demo coming from the serving_base container as the base.</li>
+<li>Finally, we run a new container using the image we just created. We expose and forward requests to Port 8501 as TF-Serving is configured to serve REST API requests on this port. If you require, a separate gRPC server is also available on Port 8500 that can be exposed in a similar manner</li>
+</ul>
+</section>
+<section id="step-5-create-vertex-ai-model-and-endpoints" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-create-vertex-ai-model-and-endpoints">Step 5: Create Vertex AI Model and Endpoints</h3>
+<p><em>Note: The following steps require the presence of a Google Cloud Billing-enabled account. GCP offers $300 in credits for a duration of 90 days. To know more, click here.</em></p>
+<p>Now, we move to Google Cloud Platform and its state-of-the-art Vertex AI offering.</p>
+<p><strong>What is Vertex AI?</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:640/0*gAlcZyqGJkAAy_Yp.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p><a href="https://cloud.google.com/vertex-ai/docs/start/introduction-unified-platform"><strong>Vertex AI</strong></a> is the official end-to-end solution for all things ML present on GCP. It offers tools to work on each aspect of the full Machine Learning lifecycle.</p>
+<ul>
+<li>Dataset Collection and Version Control</li>
+<li>Labeling</li>
+<li>Pre-processing</li>
+<li>Training</li>
+<li>Deployment</li>
+<li>Model Version</li>
+<li>Logging &amp; Monitoring</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*r1Vj8QxjG2SaNKfSAYlyqw.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p>We have already made a Docker Image that serves the model inside a TF-Serving runtime. Our Vertex AI Model deployment flow will consist of the following steps:</p>
+<ul>
+<li>Deploy the Docker image we developed into <em>Google Artifact Registry</em>. This is done in order to maintain a central source for all model versions. Google Artifact Registry is the best solution for storing artifacts as it allows multiple different formats like Maven Packages, Docker Images, etc. all in one place, in comparison to the older Google Container Registry.</li>
+<li>Import and create a <em>Vertex AI Model</em> resource from Artifact Registry.</li>
+<li>Create a <em>Vertex AI Endpoint</em> that will accept the Vertex AI Model</li>
+<li>Deploy the <em>Vertex AI Endpoint</em> and serve it for request-response traffic from the web.</li>
+</ul>
+</section>
+<section id="put-image-into-artifact-registry" class="level3">
+<h3 class="anchored" data-anchor-id="put-image-into-artifact-registry">1. Put image into Artifact Registry</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/0*9sgZL9pK3u6gZMcx.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~]$ docker tag devfest-mobilenet-demo <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>us-central1-docker.pkg.dev/test-da9ec/devfest-vertex-ai/devfest-mobilenet-demo</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~]$ docker push <span class="dt">\</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>us-central1-docker.pkg.dev/test-da9ec/devfest-vertex-ai/devfest-mobilenet-demo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here, we first go to the Artifact Registry screen and create a repository. We configure it to store Docker images. We tag the image using the URL of the repository which is of the format</p>
+<p><em>{region}-{zone}-docker.pkg.dev/{project-id}/{repository_name}/{artifact_name}</em></p>
+<p>We push the image to the same URL and upon the building of the image and its subsequent upload, it will be visible on the Console.</p>
+</section>
+<section id="create-vertex-ai-model-resource" class="level3">
+<h3 class="anchored" data-anchor-id="create-vertex-ai-model-resource">2. Create Vertex AI Model resource</h3>
+<p>To deploy our model, we have two steps. First, we must define a Vertex AI Model instance. This is done by importing the container image from Google Artifact Registry.</p>
+<p>In our case, first, we set <code>devfest-mobilenet-imagenet</code> as the name of our model. We can also provide a small description of the model for documentation purposes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/0*rzCE1Ky5MkZOGmP0.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p>Once the model is named, we choose the actual container image from Google Artifact Registry that we are going to use. Circling back to our example, we make use of our previous <code>devfest-mobilenet-demo</code> image as the basis of our model.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*-LhsLCd3Kh4Y8iE7G2J0hw.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p>If your solution is more customized (maybe using something other TF-Serving), you can choose to override the CMD or ENTRYPOINT line of your Dockerfile using the Command field during configuration. Options to set new Environment Variables or Arguments to the process are also present.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*_3LGRjwQ5dOna32fmFG12g.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p>Finally, saving the model will allow you to see it on the Console.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*v4Dttf2WkFBiKPl7XCTaFw.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="create-vertex-ai-endpoint-resource" class="level3">
+<h3 class="anchored" data-anchor-id="create-vertex-ai-endpoint-resource">3. Create Vertex AI Endpoint resource</h3>
+<p>With the Vertex AI Model prepared, we now make use of the console to create a Vertex AI Endpoint resource. This endpoint is what will control the full deployment, be it auto-scaling, security, serving, etc.</p>
+<p>We can click on <em>’Create Endpoint`</em>, which will lead us into the endpoint-creation wizard.</p>
+<p>In the first line, we give a name to our new Endpoint, followed by setting it up in a specific Region. Here, since our project is setup in <code>us-central1</code> , we are going to be restricted to just that. If we have a multi-region project, we can choose other locations too. We also get the option to set up access to the endpoint. If we choose, we can expose the endpoint freely to the internet, or we can make the endpoint private using a VPC network.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:640/0*fWteUFnEpcnpjX_V.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p>Now, we connect a Vertex AI Model with the Endpoint by using the model we had defined. We get to choose the version of the model we want to deploy. If we have multiple instances serving the model on the endpoint, we can choose to perform a traffic split. But if it is a single instance, we keep it to a full 100% split.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*XtINIzlRXVVuKhohiUNHWg.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p>In this set of options, we can specify the configuration and the number of compute nodes we would like the model to use. These are backed by GCP Compute Engine and are fully managed. This solution, by its design, auto-scales according to demand and constraints. While a minimum number of compute nodes is set to maintain the availability of the service, we can set a maximum number to control costs.</p>
+<p>An option to set a certain CPU threshold allows us to control when the service will scale up (or down) based on CPU usage.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*XtlDtx-YHdJUpmxfNBAI-Q.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p>GPU acceleration is also made available for inference compute, as specified by the Accelerator type. If you have IAM set up within your project and have the permissions policy present in your organization, you can use a Service Account to set what kind of resources the service can requisitions, as an added security check on top of other cost-saving measures.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*HBwqDm1XCr8zR-gAi9BSlQ.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p>Finally, we get options to enable and set up model monitoring, which would include the tracking of several metrics like Drift, Skew, etc. which allow us to understand how our model performs in production settings and what kind of changes are necessary to make sure that it performs as expected.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/0*-y48zTVwPOyjnVeC.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<p>Now, let us see our deployment in action!</p>
+</section>
+<section id="step-6-perform-testing-and-inference" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-perform-testing-and-inference">Step 6: Perform Testing and Inference</h3>
+<p>First, perform authentication into gcloud SDK on your local machine. Prepare the request in the form of a JSON file that will be sent in the body of the request. Make sure that you include the signature name to use since that becomes an integral part of how the model.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~]$ gcloud auth application-default login</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~]$ echo {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"instances"</span><span class="ex">:</span> [{</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">"image_bytes"</span><span class="ex">:</span> {</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"b64"</span><span class="ex">:</span> “<span class="op">&lt;</span>BASE64-OF-IMAGE-HERE<span class="op">&gt;</span>”</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                <span class="er">}</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>             <span class="er">}</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="ex">],</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"signature_name"</span><span class="ex">:</span> <span class="st">"serving_image_b64string"</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="er">}</span> <span class="op">&gt;&gt;</span> sample_request.json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For better readability, add your Vertex AI-provided Endpoint ID and Project ID as environment variables in your shell. Finally, we define a cURL POST request as per the specifications in the code snippet below.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~]$ ENDPOINT_ID=<span class="st">"&lt;YOUR-ENDPOINT-ID-HERE&gt;"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="va">PROJECT_ID</span><span class="op">=</span><span class="st">"YOUR-PROJECT-ID-HERE"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="va">INPUT_DATA_FILE</span><span class="op">=</span><span class="st">"sample_request.json"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~]$ curl <span class="dt">\</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>-X POST <span class="dt">\</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>-H <span class="st">"Authorization: Bearer </span><span class="va">$(</span><span class="ex">gcloud</span> auth print-access-token<span class="va">)</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>-H <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>https://us-central1-aiplatform.googleapis.com/v1/projects/<span class="va">${PROJECT_ID}</span>/locations/us-central1/endpoints/<span class="va">${ENDPOINT_ID}</span>:rawPredict <span class="dt">\</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>-d <span class="st">"@</span><span class="va">${INPUT_DATA_FILE}</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="predictions" class="level3">
+<h3 class="anchored" data-anchor-id="predictions">Predictions :</h3>
+<p>What you see below are the predictions of shape (1, 1000) that represent a tensor with output confidence scores for each of ImageNet’s 1000 classes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:720/0*4OmmfVvA_dVoPduh.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="what-have-we-accomplished" class="level2">
+<h2 class="anchored" data-anchor-id="what-have-we-accomplished">What have we accomplished?</h2>
+<p>By this time, we have completed all our setup. Quite a few things were done within this article. Take a look back at the problems we set out to solve:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*04bjgqAE7RKBuQo4a9Bhxw.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">image</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><strong>Scale</strong>: The solution we made is one that can be used in a production setting. With the capability of Vertex AI and the services for Auto-Scaling and Monitoring, you can leverage state-of-the-art tech to make sure your model is deployed in the most performant way possible.</li>
+<li><strong>Can integrate with CI/CD Pipelines</strong>: Our solution is one that can be integrated into CI/CD pipelines due to Google Artifact Registry, which can be as simple as pushing to the registry. You can make use of other GCP Services (or Vertex AI) that will allow you to orchestrate the updates automatically.</li>
+<li><strong>Optimizations</strong>: TF-Serving is inherently performant, allowing you to serve your model without any hassle. Due to its low-latency nature and graph-mode execution, performance is not a thing you need to worry about.</li>
+<li><strong>Modularity</strong>: Each and every one of these components is easily replaceable or can be repaired with relative ease, compared to more rigid or non-debuggable products.</li>
+<li><strong>Tracking</strong>: With state-of-the-art tracking features, your model performance is only a click away. You can leverage automatic insights from Vertex AI as well.</li>
+</ul>
+</section>
+<section id="where-to-go-from-here" class="level1">
+<h1><strong>Where to go from here?</strong></h1>
+<p>Machine Learning can solve a major number of modern-day problems that startups or any kind of problem-solving body faces. Hence, it becomes an important field to stay on top of. But it is equally important to focus on the deployment aspect since, without it, your service is not available to your customers, leading to no value being added.</p>
+<p>Below are some interesting reference links that can allow you to explore the world of TensorFlow Serving and Vertex AI further.</p>
+<ol type="1">
+<li><a href="https://www.tensorflow.org/tfx/guide/serving">Guide to TF-Serving (Official TensorFlow documentation)</a></li>
+<li><a href="https://www.youtube.com/watch?v=gT4qqHMiEpA">Priyanka Vergadia’s video: Accelerate ML Experimentation and Deployment with Vertex AI</a></li>
+<li><a href="https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning">MLOps Architecture using GCP</a></li>
+<li><a href="https://builtin.com/data-science/transfer-learning">What is Transfer Learning?</a></li>
+</ol>
+</section>
+<section id="reference-documents" class="level1">
+<h1><strong>Reference Documents</strong></h1>
+<ol type="1">
+<li><a href="https://www.tensorflow.org/tfx/serving/docker">TFX Serving with Docker</a></li>
+<li><a href="https://cloud.google.com/vertex-ai/docs/predictions/overview">GCP Vertex AI Documentation</a></li>
+</ol>
+</section>
+<section id="acknowledgments" class="level1">
+<h1><strong>Acknowledgments</strong></h1>
+<p>Thank you to <a href="https://www.linkedin.com/in/ivaibhavmalpani">Vaibhav Malpani</a> from GDG Cloud Mumbai for providing the GCP credits required to run the demo.</p>
+<p>Thank you to <a href="https://www.linkedin.com/in/iromin">Romin Irani</a> for the opportunity to publish the blog in this publication.</p>
+<p>Thank you to <a href="https://www.linkedin.com/in/sayak-paul">Sayak Paul</a> for guiding me towards Vertex AI (a very useful demo created by him that I made use of, as a reference point: <a href="https://huggingface.co/blog/deploy-vertex-ai">Deploying ViT on Vertex AI</a>)</p>
+<p>Thank you to all the folks who reviewed my slides as part of my talk at GDG DevFest Raipur on the same topic.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Copyright © 2023, Suvaditya Mukherjee</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

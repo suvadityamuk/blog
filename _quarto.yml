@@ -1,0 +1,45 @@
+project:
+  type: website
+  output-dir: docs
+
+execute: 
+  freeze: auto
+  
+website:
+  title: "Suvaditya Mukherjee | suvadityamuk"
+  site-url: "https://suvadityamuk.com"
+  description: "Suvaditya Mukherjee"
+  page-navigation: true
+  reader-mode: true
+  page-footer: 
+    center: "Copyright © 2023, Suvaditya Mukherjee"
+    background: light
+    border: true
+  navbar:
+    search: true
+    background: primary
+    fontcolor: secondary
+    pinned: true
+    right:
+      - text: About
+        file: about.qmd
+      - text: Talks
+        file: talks.qmd
+      - icon: github
+        href: https://github.com/suvadityamuk
+      - icon: twitter
+        href: https://twitter.com/halcyonrayes
+      - icon: linkedin
+        href: https://www.linkedin.com/in/suvadityamukherjee
+      - icon: rss
+        href: index.xml
+
+format:
+  html:
+    theme: 
+      light: default
+      dark: darkly
+    css: styles.css
+
+
+

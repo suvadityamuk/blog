@@ -1,0 +1,15 @@
+# Talks
+
+### I deliver talks at local and national meetups in India, around the topics of Machine Learning, MLOps, and Cloud
+
+
+- Presented a talk at **DevFest Mumbai 2022**: [Preparing your ML models for the cloud](http://bit.ly/cloud-ml-22)
+- Presented a talk at **DevFest Raipur 2022**: [Accelerating Model deployment using Transfer Learning and Vertex AI](http://bit.ly/tf-vertex-ai)
+- Presented a talk at **DevFest New Delhi 2022**: [Ivy - Unifying ML With One Line of Code](http://bit.ly/ivy-gdg-devfest)
+- Presented a talk at **GDSC CRCE 2022**: [Math in Deep Learning and Technology](http://bit.ly/math-day-frce)
+- Presented a talk at **NMIMS University Mumbai**: [Hands-on with TensorFlow and Keras](http://bit.ly/keras-hands-on)
+- Presented a talk at **Mumbai Women Coders**: [Improving Digital Experience for Women using Machine Learning](http://bit.ly/women-ml-text)
+- Presented a talk at **The Hackers Meetup**: [Tackling Security Challenges in ML Systems](http://bit.ly/tackling-ml-security)
+
+
+If you'd like to contact me about a talk, feel free to reach out on [suvadityamuk@gmail.com](mailto:suvadityamuk@gmail.com)

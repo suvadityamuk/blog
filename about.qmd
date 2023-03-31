@@ -1,0 +1,60 @@
+---
+title: "Suvaditya Mukherjee"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/halcyonrayes
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/suvadityamukherjee
+    - icon: github
+      text: Github
+      href: https://github.com/suvadityamuk
+    - icon: medium
+      text: Medium
+      href: https://medium.com/@suvadityamuk
+
+---
+
+# About this blog
+
+## Introduction
+
+Hello!
+My name is Suvaditya Mukherjee. I am a student of the Bachelors in Artificial Intelligence Program at NMIMS MPSTME, Mumbai.
+
+I have played around and dabbled in many different disciplines of Computer Science in a quest to find out what excites me the most, and I have realized that Deep Learning and its applications in solving Real-world problems is the best way I see myself utilizing my skills for bettering the community.
+
+I am a former Lead of the Google Developer Student Club at NMIMS MPSTME Mumbai and the former Co-Head of the Technical Software department at the International Society of Automation, NMIMS MPSTME Mumbai.
+
+I have formerly interned for 2 months at Mosaic Wellness Pvt. Ltd. as a Software Engineer Intern
+
+Technology Experience
+Deep Learning : Tensorflow/Keras, PyTorch, Weights&Biases, Optuna
+Machine Learning : Scikit-Learn, Pandas, Matplotlib, NumPy, CuPy, Seaborn, OpenCV
+Cloud Technologies : Amazon Web Services, Google Cloud, Heroku (Salesforce)
+Mobile App Development : Java, Flutter(Dart)
+Web Development : React, Node.js, Bootstrap, HTML/CSS
+Languages : Python, C++, Java, Dart, JavaScript, Rust (Beginner)
+Specialized Software : SOLIDWORKS (Beginner), Wireshark (Beginner)
+Containerization : Docker, Kubernetes
+Certifications and Awards
+Google Inc. : GDSC Lead Tenure Completion
+IET MPSTME Hack & Code : Runner-up (2nd Prize) with Aaryadev Chandra, Dev Chandan and Shireen Chand
+Udacity : AWS Machine Learning Foundations
+LinkedIn : Advanced Linux - The Linux Kernel
+LinkedIn : PyTorch Essential Training - Deep Learning
+LinkedIn : Tensorflow - Neural Networks and Working with Tables
+LinkedIn : Unix Essential Training
+Coursera : Building Modern Python Applications on AWS
+Kaggle : Intermediate Machine Learning
+Kaggle : Intro to Machine Learning
+Kaggle : Intro to AI Ethics
+Kaggle : Pandas
+Kaggle : Python
+Stepik : Data Structures
+Coursera : Programming for Everybody(Getting Started with Python)
+Goldman Sachs : Engineering Virtual Program
