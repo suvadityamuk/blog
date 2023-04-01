@@ -256,6 +256,6 @@
     "href": "writings.html",
     "title": "Writings",
     "section": "",
-    "text": "Writings\nI have written tutorials and blogs about interesting Machine Learning topics and research papers. Some of them are listed below\n\nKeras.io\n\nElectroencephalogram Signal Classification for action identification\nUsing the Forward-Forward Algorithm for Image Classification\nWhen Recurrence meets Transformers\n\n\n\nTowards Data Science\n\nThe Annotated ResNet-50\nHow to make your Models available to the public\n\n\n\nGoogle Cloud Community - Medium\n\nAccelerating Model Deployment using Transfer Learning and Vertex AI"
+    "text": "Writings\nI have written tutorials and blogs about interesting Machine Learning topics and research papers. Some of them are listed below\n\nKeras.io\n\nElectroencephalogram Signal Classification for action identification\nUsing the Forward-Forward Algorithm for Image Classification\nWhen Recurrence meets Transformers (with Aritra Roy Gosthipaty)\n\n\n\nTowards Data Science\n\nThe Annotated ResNet-50\nHow to make your Models available to the public\n\n\n\nGoogle Cloud Community - Medium\n\nAccelerating Model Deployment using Transfer Learning and Vertex AI"
   }
 ]
