@@ -1,0 +1,10 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html",
+      "/posts/2022-09-05-how-to-make-your-models-available-to-the-public.html",
+      "/posts/2022-08-05-the-annotated-resnet.html"
+    ]
+  }
+]
