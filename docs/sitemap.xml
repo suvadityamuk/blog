@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://suvadityamuk.com/index.html</loc>
-    <lastmod>2023-04-01T05:24:29.242Z</lastmod>
-  </url>
-  <url>
     <loc>https://suvadityamuk.com/posts/2022-08-05-the-annotated-resnet.html</loc>
-    <lastmod>2023-04-01T05:24:30.254Z</lastmod>
+    <lastmod>2023-04-01T06:27:53.855Z</lastmod>
   </url>
   <url>
     <loc>https://suvadityamuk.com/posts/2022-09-05-how-to-make-your-models-available-to-the-public.html</loc>
-    <lastmod>2023-04-01T05:24:31.171Z</lastmod>
+    <lastmod>2023-04-01T06:27:54.734Z</lastmod>
   </url>
   <url>
     <loc>https://suvadityamuk.com/posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html</loc>
-    <lastmod>2023-04-01T05:24:32.784Z</lastmod>
+    <lastmod>2023-04-01T06:27:56.284Z</lastmod>
   </url>
   <url>
     <loc>https://suvadityamuk.com/about.html</loc>
-    <lastmod>2023-04-01T05:24:33.286Z</lastmod>
+    <lastmod>2023-04-01T06:27:56.778Z</lastmod>
+  </url>
+  <url>
+    <loc>https://suvadityamuk.com/index.html</loc>
+    <lastmod>2023-04-01T06:27:57.465Z</lastmod>
   </url>
   <url>
     <loc>https://suvadityamuk.com/talks.html</loc>
-    <lastmod>2023-04-01T05:24:33.661Z</lastmod>
+    <lastmod>2023-04-01T06:27:57.846Z</lastmod>
   </url>
   <url>
     <loc>https://suvadityamuk.com/writings.html</loc>
-    <lastmod>2023-04-01T05:24:34.018Z</lastmod>
+    <lastmod>2023-04-01T06:27:58.192Z</lastmod>
   </url>
 </urlset>
