@@ -288,12 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>TensorFlow-Keras ecosystem</strong></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/0*CU_rXCNSYjY5QMHg.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/tensorflow_logo.png" class="img-fluid"></p>
 <p>One of the most mature ecosystems for pre-trained models is available using the keras.applications Module or using <a href="https://tfhub.dev/">TensorFlow Hub</a>. <a href="https://www.tensorflow.org/api_docs/python/tf/keras/applications"><code>keras.applications</code></a> contains a total of 38 Vision models pre-trained on the ImageNet dataset by the team behind Keras. They also provide a table that details statistics like the number of parameters within the model as well as benchmarks like inference latency on a general configuration. These models are extensively used and are available free of charge.</p>
 <p>Through this, you don’t need to just get inferences. You can get everything in between, be it feature-vectors or fine-tuned models, or even just the base model that can perform inference for ImageNet classes.</p>
 <p>If it seems suitable to your use case, you can even convert these models to <a href="https://www.tensorflow.org/lite">TFLite</a> and deploy them to edge devices (provided the number of parameters is under a certain threshold to ensure support).</p>
@@ -303,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:640/0*XLwV1E-sfEYxf32h.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/hugging_face.jpg" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
@@ -436,7 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="step-3-use-tensorflow-serving-and-savedmodel">Step 3: Use TensorFlow Serving and SavedModel</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/0*q2lsO0XuTx1f-Ria.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/tf-serving.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
@@ -512,7 +507,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>What is Vertex AI?</strong></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:640/0*gAlcZyqGJkAAy_Yp.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/vertex-ai-suite.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
@@ -528,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*r1Vj8QxjG2SaNKfSAYlyqw.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/vertex-ai-flow.webp" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
@@ -544,7 +539,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="put-image-into-artifact-registry">1. Put image into Artifact Registry</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/0*9sgZL9pK3u6gZMcx.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/step1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
@@ -563,28 +558,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In our case, first, we set <code>devfest-mobilenet-imagenet</code> as the name of our model. We can also provide a small description of the model for documentation purposes.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/0*rzCE1Ky5MkZOGmP0.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/step2.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
 <p>Once the model is named, we choose the actual container image from Google Artifact Registry that we are going to use. Circling back to our example, we make use of our previous <code>devfest-mobilenet-demo</code> image as the basis of our model.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*-LhsLCd3Kh4Y8iE7G2J0hw.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/step3.webp" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
 <p>If your solution is more customized (maybe using something other TF-Serving), you can choose to override the CMD or ENTRYPOINT line of your Dockerfile using the Command field during configuration. Options to set new Environment Variables or Arguments to the process are also present.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*_3LGRjwQ5dOna32fmFG12g.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/step4.webp" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
 <p>Finally, saving the model will allow you to see it on the Console.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*v4Dttf2WkFBiKPl7XCTaFw.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/step5.webp" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
@@ -596,14 +591,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In the first line, we give a name to our new Endpoint, followed by setting it up in a specific Region. Here, since our project is setup in <code>us-central1</code> , we are going to be restricted to just that. If we have a multi-region project, we can choose other locations too. We also get the option to set up access to the endpoint. If we choose, we can expose the endpoint freely to the internet, or we can make the endpoint private using a VPC network.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:640/0*fWteUFnEpcnpjX_V.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/step6.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
 <p>Now, we connect a Vertex AI Model with the Endpoint by using the model we had defined. We get to choose the version of the model we want to deploy. If we have multiple instances serving the model on the endpoint, we can choose to perform a traffic split. But if it is a single instance, we keep it to a full 100% split.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*XtINIzlRXVVuKhohiUNHWg.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/step7.webp" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
@@ -611,21 +606,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>An option to set a certain CPU threshold allows us to control when the service will scale up (or down) based on CPU usage.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*XtlDtx-YHdJUpmxfNBAI-Q.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/step8.webp" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
 <p>GPU acceleration is also made available for inference compute, as specified by the Accelerator type. If you have IAM set up within your project and have the permissions policy present in your organization, you can use a Service Account to set what kind of resources the service can requisitions, as an added security check on top of other cost-saving measures.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*HBwqDm1XCr8zR-gAi9BSlQ.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/step9.webp" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
 <p>Finally, we get options to enable and set up model monitoring, which would include the tracking of several metrics like Drift, Skew, etc. which allow us to understand how our model performs in production settings and what kind of changes are necessary to make sure that it performs as expected.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/0*-y48zTVwPOyjnVeC.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/step10.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
@@ -662,7 +657,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>What you see below are the predictions of shape (1, 1000) that represent a tensor with output confidence scores for each of ImageNet’s 1000 classes.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:720/0*4OmmfVvA_dVoPduh.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/terminal_output.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
@@ -673,7 +668,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>By this time, we have completed all our setup. Quite a few things were done within this article. Take a look back at the problems we set out to solve:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*04bjgqAE7RKBuQo4a9Bhxw.png" class="img-fluid figure-img"></p>
+<p><img src="./images/tf-vertex-ai/serving_wrapper.webp" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">image</figcaption><p></p>
 </figure>
 </div>
@@ -685,8 +680,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Tracking</strong>: With state-of-the-art tracking features, your model performance is only a click away. You can leverage automatic insights from Vertex AI as well.</li>
 </ul>
 </section>
-<section id="where-to-go-from-here" class="level1">
-<h1><strong>Where to go from here?</strong></h1>
+<section id="where-to-go-from-here" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-go-from-here"><strong>Where to go from here?</strong></h2>
 <p>Machine Learning can solve a major number of modern-day problems that startups or any kind of problem-solving body faces. Hence, it becomes an important field to stay on top of. But it is equally important to focus on the deployment aspect since, without it, your service is not available to your customers, leading to no value being added.</p>
 <p>Below are some interesting reference links that can allow you to explore the world of TensorFlow Serving and Vertex AI further.</p>
 <ol type="1">
@@ -696,15 +691,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="https://builtin.com/data-science/transfer-learning">What is Transfer Learning?</a></li>
 </ol>
 </section>
-<section id="reference-documents" class="level1">
-<h1><strong>Reference Documents</strong></h1>
+<section id="reference-documents" class="level2">
+<h2 class="anchored" data-anchor-id="reference-documents"><strong>Reference Documents</strong></h2>
 <ol type="1">
 <li><a href="https://www.tensorflow.org/tfx/serving/docker">TFX Serving with Docker</a></li>
 <li><a href="https://cloud.google.com/vertex-ai/docs/predictions/overview">GCP Vertex AI Documentation</a></li>
 </ol>
 </section>
-<section id="acknowledgments" class="level1">
-<h1><strong>Acknowledgments</strong></h1>
+<section id="acknowledgments" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgments"><strong>Acknowledgments</strong></h2>
 <p>Thank you to <a href="https://www.linkedin.com/in/ivaibhavmalpani">Vaibhav Malpani</a> from GDG Cloud Mumbai for providing the GCP credits required to run the demo.</p>
 <p>Thank you to <a href="https://www.linkedin.com/in/iromin">Romin Irani</a> for the opportunity to publish the blog in this publication.</p>
 <p>Thank you to <a href="https://www.linkedin.com/in/sayak-paul">Sayak Paul</a> for guiding me towards Vertex AI (a very useful demo created by him that I made use of, as a reference point: <a href="https://huggingface.co/blog/deploy-vertex-ai">Deploying ViT on Vertex AI</a>)</p>
