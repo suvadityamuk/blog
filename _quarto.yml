@@ -25,6 +25,8 @@ website:
         file: about.qmd
       - text: Talks
         file: talks.qmd
+      - text: Writings
+        file: writings.qmd
       - icon: github
         href: https://github.com/suvadityamuk
       - icon: twitter

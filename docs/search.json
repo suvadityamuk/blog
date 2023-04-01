@@ -56,13 +56,6 @@
     "text": "Conclusion\nAbove, we have visited the Residual Network architecture, gone over its salient features, implemented a ResNet-50 model from scratch and trained it to get inferences on the Stanford Dogs dataset.\nAs a model, ResNet brought about a revolution in the field of Computer Vision and Deep Learning simultaneously. It went on to win the ImageNet Large Scale Visual Recognition Challenge of 2015 and COCO Competition. But it was only a stepping stone to many interesting variations which yielded better results. Check the Interesting Links section below to find some great blogs and research papers for the same."
   },
   {
-    "objectID": "posts/2022-08-05-the-annotated-resnet.html#references",
-    "href": "posts/2022-08-05-the-annotated-resnet.html#references",
-    "title": "The Annotated ResNet-50",
-    "section": "References",
-    "text": "References\n{% bibliography –cited %}"
-  },
-  {
     "objectID": "posts/2022-08-05-the-annotated-resnet.html#interesting-links",
     "href": "posts/2022-08-05-the-annotated-resnet.html#interesting-links",
     "title": "The Annotated ResNet-50",
@@ -217,6 +210,27 @@
     "text": "What have we accomplished?\nBy this time, we have completed all our setup. Quite a few things were done within this article. Take a look back at the problems we set out to solve:\n\n\n\nimage\n\n\n\nScale: The solution we made is one that can be used in a production setting. With the capability of Vertex AI and the services for Auto-Scaling and Monitoring, you can leverage state-of-the-art tech to make sure your model is deployed in the most performant way possible.\nCan integrate with CI/CD Pipelines: Our solution is one that can be integrated into CI/CD pipelines due to Google Artifact Registry, which can be as simple as pushing to the registry. You can make use of other GCP Services (or Vertex AI) that will allow you to orchestrate the updates automatically.\nOptimizations: TF-Serving is inherently performant, allowing you to serve your model without any hassle. Due to its low-latency nature and graph-mode execution, performance is not a thing you need to worry about.\nModularity: Each and every one of these components is easily replaceable or can be repaired with relative ease, compared to more rigid or non-debuggable products.\nTracking: With state-of-the-art tracking features, your model performance is only a click away. You can leverage automatic insights from Vertex AI as well."
   },
   {
+    "objectID": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#where-to-go-from-here",
+    "href": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#where-to-go-from-here",
+    "title": "Accelerating Model Deployment using Transfer Learning and Vertex AI",
+    "section": "Where to go from here?",
+    "text": "Where to go from here?\nMachine Learning can solve a major number of modern-day problems that startups or any kind of problem-solving body faces. Hence, it becomes an important field to stay on top of. But it is equally important to focus on the deployment aspect since, without it, your service is not available to your customers, leading to no value being added.\nBelow are some interesting reference links that can allow you to explore the world of TensorFlow Serving and Vertex AI further.\n\nGuide to TF-Serving (Official TensorFlow documentation)\nPriyanka Vergadia’s video: Accelerate ML Experimentation and Deployment with Vertex AI\nMLOps Architecture using GCP\nWhat is Transfer Learning?"
+  },
+  {
+    "objectID": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#reference-documents",
+    "href": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#reference-documents",
+    "title": "Accelerating Model Deployment using Transfer Learning and Vertex AI",
+    "section": "Reference Documents",
+    "text": "Reference Documents\n\nTFX Serving with Docker\nGCP Vertex AI Documentation"
+  },
+  {
+    "objectID": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#acknowledgments",
+    "href": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#acknowledgments",
+    "title": "Accelerating Model Deployment using Transfer Learning and Vertex AI",
+    "section": "Acknowledgments",
+    "text": "Acknowledgments\nThank you to Vaibhav Malpani from GDG Cloud Mumbai for providing the GCP credits required to run the demo.\nThank you to Romin Irani for the opportunity to publish the blog in this publication.\nThank you to Sayak Paul for guiding me towards Vertex AI (a very useful demo created by him that I made use of, as a reference point: Deploying ViT on Vertex AI)\nThank you to all the folks who reviewed my slides as part of my talk at GDG DevFest Raipur on the same topic."
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "Suvaditya Mukherjee",
@@ -238,24 +252,10 @@
     "text": "Talks\n\nI deliver talks at local and national meetups in India, around the topics of Machine Learning, MLOps, and Cloud\n\nPresented a talk at DevFest Mumbai 2022: Preparing your ML models for the cloud\nPresented a talk at DevFest Raipur 2022: Accelerating Model deployment using Transfer Learning and Vertex AI\nPresented a talk at DevFest New Delhi 2022: Ivy - Unifying ML With One Line of Code\nPresented a talk at GDSC CRCE 2022: Math in Deep Learning and Technology\nPresented a talk at NMIMS University Mumbai: Hands-on with TensorFlow and Keras\nPresented a talk at Mumbai Women Coders: Improving Digital Experience for Women using Machine Learning\nPresented a talk at The Hackers Meetup: Tackling Security Challenges in ML Systems\n\nIf you’d like to contact me about a talk, feel free to reach out on suvadityamuk@gmail.com"
   },
   {
-    "objectID": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#where-to-go-from-here",
-    "href": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#where-to-go-from-here",
-    "title": "Accelerating Model Deployment using Transfer Learning and Vertex AI",
-    "section": "Where to go from here?",
-    "text": "Where to go from here?\nMachine Learning can solve a major number of modern-day problems that startups or any kind of problem-solving body faces. Hence, it becomes an important field to stay on top of. But it is equally important to focus on the deployment aspect since, without it, your service is not available to your customers, leading to no value being added.\nBelow are some interesting reference links that can allow you to explore the world of TensorFlow Serving and Vertex AI further.\n\nGuide to TF-Serving (Official TensorFlow documentation)\nPriyanka Vergadia’s video: Accelerate ML Experimentation and Deployment with Vertex AI\nMLOps Architecture using GCP\nWhat is Transfer Learning?"
-  },
-  {
-    "objectID": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#reference-documents",
-    "href": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#reference-documents",
-    "title": "Accelerating Model Deployment using Transfer Learning and Vertex AI",
-    "section": "Reference Documents",
-    "text": "Reference Documents\n\nTFX Serving with Docker\nGCP Vertex AI Documentation"
-  },
-  {
-    "objectID": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#acknowledgments",
-    "href": "posts/2023-01-03-accelerating-model-deployment-using-transfer-learning-and-vertex-ai.html#acknowledgments",
-    "title": "Accelerating Model Deployment using Transfer Learning and Vertex AI",
-    "section": "Acknowledgments",
-    "text": "Acknowledgments\nThank you to Vaibhav Malpani from GDG Cloud Mumbai for providing the GCP credits required to run the demo.\nThank you to Romin Irani for the opportunity to publish the blog in this publication.\nThank you to Sayak Paul for guiding me towards Vertex AI (a very useful demo created by him that I made use of, as a reference point: Deploying ViT on Vertex AI)\nThank you to all the folks who reviewed my slides as part of my talk at GDG DevFest Raipur on the same topic."
+    "objectID": "writings.html",
+    "href": "writings.html",
+    "title": "Writings",
+    "section": "",
+    "text": "Writings\nI have written tutorials and blogs about interesting Machine Learning topics and research papers. Some of them are listed below\n\nTowards Data Science\n\nThe Annotated ResNet-50\n[How to make your Models available to the public]\n\n\n\nGoogle Cloud Community - Medium\n\nAccelerating Model Deployment using Transfer Learning and Vertex AI\n\n\n\nKeras.io\n\nElectroencephalogram Signal Classification for action identification\nUsing the Forward-Forward Algorithm for Image Classification\nWhen Recurrence meets Transformers"
   }
 ]
