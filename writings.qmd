@@ -2,14 +2,14 @@
 
 I have written tutorials and blogs about interesting Machine Learning topics and research papers. Some of them are listed below
 
-### Towards Data Science
-- [The Annotated ResNet-50]()
-- [How to make your Models available to the public]
-
-### Google Cloud Community - Medium
-- [Accelerating Model Deployment using Transfer Learning and Vertex AI]()
-
 ### Keras.io
 - [Electroencephalogram Signal Classification for action identification](https://keras.io/examples/timeseries/eeg_signal_classification)
 - [Using the Forward-Forward Algorithm for Image Classification](https://keras.io/examples/vision/forwardforward/)
 - [When Recurrence meets Transformers](https://github.com/keras-team/keras-io/pull/1279)
+
+### Towards Data Science
+- [The Annotated ResNet-50](https://towardsdatascience.com/the-annotated-resnet-50-a6c536034758)
+- [How to make your Models available to the public](https://towardsdatascience.com/how-to-make-your-models-available-to-the-public-be782dcb9942)
+
+### Google Cloud Community - Medium
+- [Accelerating Model Deployment using Transfer Learning and Vertex AI](https://medium.com/google-cloud/accelerating-model-deployment-using-transfer-learning-and-vertex-ai-6ee6cc7332e9)
