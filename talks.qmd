@@ -10,6 +10,7 @@
 - Presented a talk at **NMIMS University Mumbai**: [Hands-on with TensorFlow and Keras](http://bit.ly/keras-hands-on)
 - Presented a talk at **Mumbai Women Coders**: [Improving Digital Experience for Women using Machine Learning](http://bit.ly/women-ml-text)
 - Presented a talk at **The Hackers Meetup**: [Tackling Security Challenges in ML Systems](http://bit.ly/tackling-ml-security)
+- Presented a talk at **GDSC WoW**: [Exploring ML Wildlife with TensorFlow Decision Forests](http://bit.ly/tf-decision-forests)
 
 
 If you'd like to contact me about a talk, feel free to reach out on [suvadityamuk@gmail.com](mailto:suvadityamuk@gmail.com)

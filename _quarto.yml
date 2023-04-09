@@ -6,15 +6,16 @@ execute:
   freeze: auto
   
 website:
-  title: "Suvaditya Mukherjee | suvadityamuk"
+  title: "Suvaditya Mukherjee"
   site-url: "https://suvadityamuk.com"
   description: "Suvaditya Mukherjee"
   page-navigation: true
-  reader-mode: true
-  page-footer: 
-    center: "Copyright © 2023, Suvaditya Mukherjee"
-    background: light
-    border: true
+  google-analytics: "G-XHQD3SPP05"
+  favicon: favicon.png
+  # page-footer: 
+  #   center: "Copyright © 2023, Suvaditya Mukherjee"
+  #   background: light
+  #   border: true
   navbar:
     search: true
     background: primary
@@ -33,14 +34,11 @@ website:
         href: https://twitter.com/halcyonrayes
       - icon: linkedin
         href: https://www.linkedin.com/in/suvadityamukherjee
-      - icon: rss
-        href: index.xml
 
 format:
   html:
     theme: 
       light: default
-      dark: darkly
     css: styles.css
 
 

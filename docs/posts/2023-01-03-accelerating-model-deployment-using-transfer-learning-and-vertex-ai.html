@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2023-01-03">
 <meta name="description" content="Getting started with using Docker and TF Serving on GCP">
 
-<title>Suvaditya Mukherjee | suvadityamuk - Accelerating Model Deployment using Transfer Learning and Vertex AI</title>
+<title>Suvaditya Mukherjee - Accelerating Model Deployment using Transfer Learning and Vertex AI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,17 +66,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -96,6 +95,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-XHQD3SPP05"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XHQD3SPP05', { 'anonymize_ip': true});
+</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -109,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Suvaditya Mukherjee | suvadityamuk</span>
+    <span class="navbar-title">Suvaditya Mukherjee</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -145,19 +153,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </i> 
  <span class="menu-text"></span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
-</i> 
- <span class="menu-text"></span></a>
-  </li>  
 </ul>
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -300,12 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>Hugging Face ecosystem</strong></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/hugging_face.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/hugging_face.jpg" class="img-fluid"></p>
 <p><a href="https://huggingface.co/">Hugging Face</a> is easily one of the largest, if not the largest host of models on the internet. With over 100,000 models available, there is a low chance that your use case cannot be fulfilled by a model from here. These models are contributed by the community, small-scale teams, large-scale enterprises, and everything in between.</p>
 <p>Enterprises like Google, Microsoft, and Facebook also release pre-trained weights for their latest models from their research teams here. This gives you access to cutting-edge models in a simple manner and without much overhead.</p>
 <p>Moreover, you get this access for free (while a paid service exists for accessing better compute).</p>
@@ -433,12 +425,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="deployment-1">Deployment</h2>
 <section id="step-3-use-tensorflow-serving-and-savedmodel" class="level3">
 <h3 class="anchored" data-anchor-id="step-3-use-tensorflow-serving-and-savedmodel">Step 3: Use TensorFlow Serving and SavedModel</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/tf-serving.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/tf-serving.png" class="img-fluid"></p>
 <p><a href="https://www.tensorflow.org/tfx/guide/serving">TensorFlow Serving</a> is part of the larger TFX (TensorFlow Extended) ecosystem that helps users develop full production-scale pipelines. TF-Serving is a low-latency, high-throughput system that is flexible enough to allow a large array of options.</p>
 <p>While more straightforward solutions exist to deploy models, like using <a href="https://flask.palletsprojects.com/">Flask</a> or <a href="https://www.djangoproject.com/">Django</a>, that would require you to write and maintain a lot of boilerplate along with performing maintenance, error-handling, and edge-case handling for the framework involved. With TF-Serving, all of that is abstracted away.</p>
 <p>Another important fact is that TF-Serving is fully compatible with containerization, leading to no worries about packages, compatibility, dependency issues, and so on.</p>
@@ -509,12 +496,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><em>Note: The following steps require the presence of a Google Cloud Billing-enabled account. GCP offers $300 in credits for a duration of 90 days. To know more, click here.</em></p>
 <p>Now, we move to Google Cloud Platform and its state-of-the-art Vertex AI offering.</p>
 <p><strong>What is Vertex AI?</strong></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/vertex-ai-suite.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/vertex-ai-suite.png" class="img-fluid"></p>
 <p><a href="https://cloud.google.com/vertex-ai/docs/start/introduction-unified-platform"><strong>Vertex AI</strong></a> is the official end-to-end solution for all things ML present on GCP. It offers tools to work on each aspect of the full Machine Learning lifecycle.</p>
 <ul>
 <li>Dataset Collection and Version Control</li>
@@ -525,12 +507,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Model Version</li>
 <li>Logging &amp; Monitoring</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/vertex-ai-flow.webp" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/vertex-ai-flow.webp" class="img-fluid"></p>
 <p>We have already made a Docker Image that serves the model inside a TF-Serving runtime. Our Vertex AI Model deployment flow will consist of the following steps:</p>
 <ul>
 <li>Deploy the Docker image we developed into <em>Google Artifact Registry</em>. This is done in order to maintain a central source for all model versions. Google Artifact Registry is the best solution for storing artifacts as it allows multiple different formats like Maven Packages, Docker Images, etc. all in one place, in comparison to the older Google Container Registry.</li>
@@ -541,12 +518,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="put-image-into-artifact-registry" class="level3">
 <h3 class="anchored" data-anchor-id="put-image-into-artifact-registry">1. Put image into Artifact Registry</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/step1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/step1.png" class="img-fluid"></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[suvaditya@fedora</span> ~]$ docker tag devfest-mobilenet-demo <span class="dt">\</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>us-central1-docker.pkg.dev/test-da9ec/devfest-vertex-ai/devfest-mobilenet-demo</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -560,74 +532,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="create-vertex-ai-model-resource">2. Create Vertex AI Model resource</h3>
 <p>To deploy our model, we have two steps. First, we must define a Vertex AI Model instance. This is done by importing the container image from Google Artifact Registry.</p>
 <p>In our case, first, we set <code>devfest-mobilenet-imagenet</code> as the name of our model. We can also provide a small description of the model for documentation purposes.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/step2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/step2.png" class="img-fluid"></p>
 <p>Once the model is named, we choose the actual container image from Google Artifact Registry that we are going to use. Circling back to our example, we make use of our previous <code>devfest-mobilenet-demo</code> image as the basis of our model.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/step3.webp" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/step3.webp" class="img-fluid"></p>
 <p>If your solution is more customized (maybe using something other TF-Serving), you can choose to override the CMD or ENTRYPOINT line of your Dockerfile using the Command field during configuration. Options to set new Environment Variables or Arguments to the process are also present.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/step4.webp" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/step4.webp" class="img-fluid"></p>
 <p>Finally, saving the model will allow you to see it on the Console.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/step5.webp" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/step5.webp" class="img-fluid"></p>
 </section>
 <section id="create-vertex-ai-endpoint-resource" class="level3">
 <h3 class="anchored" data-anchor-id="create-vertex-ai-endpoint-resource">3. Create Vertex AI Endpoint resource</h3>
 <p>With the Vertex AI Model prepared, we now make use of the console to create a Vertex AI Endpoint resource. This endpoint is what will control the full deployment, be it auto-scaling, security, serving, etc.</p>
 <p>We can click on <em>’Create Endpoint`</em>, which will lead us into the endpoint-creation wizard.</p>
 <p>In the first line, we give a name to our new Endpoint, followed by setting it up in a specific Region. Here, since our project is setup in <code>us-central1</code> , we are going to be restricted to just that. If we have a multi-region project, we can choose other locations too. We also get the option to set up access to the endpoint. If we choose, we can expose the endpoint freely to the internet, or we can make the endpoint private using a VPC network.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/step6.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/step6.png" class="img-fluid"></p>
 <p>Now, we connect a Vertex AI Model with the Endpoint by using the model we had defined. We get to choose the version of the model we want to deploy. If we have multiple instances serving the model on the endpoint, we can choose to perform a traffic split. But if it is a single instance, we keep it to a full 100% split.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/step7.webp" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/step7.webp" class="img-fluid"></p>
 <p>In this set of options, we can specify the configuration and the number of compute nodes we would like the model to use. These are backed by GCP Compute Engine and are fully managed. This solution, by its design, auto-scales according to demand and constraints. While a minimum number of compute nodes is set to maintain the availability of the service, we can set a maximum number to control costs.</p>
 <p>An option to set a certain CPU threshold allows us to control when the service will scale up (or down) based on CPU usage.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/step8.webp" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/step8.webp" class="img-fluid"></p>
 <p>GPU acceleration is also made available for inference compute, as specified by the Accelerator type. If you have IAM set up within your project and have the permissions policy present in your organization, you can use a Service Account to set what kind of resources the service can requisitions, as an added security check on top of other cost-saving measures.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/step9.webp" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/step9.webp" class="img-fluid"></p>
 <p>Finally, we get options to enable and set up model monitoring, which would include the tracking of several metrics like Drift, Skew, etc. which allow us to understand how our model performs in production settings and what kind of changes are necessary to make sure that it performs as expected.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/step10.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/step10.png" class="img-fluid"></p>
 <p>Now, let us see our deployment in action!</p>
 </section>
 <section id="step-6-perform-testing-and-inference" class="level3">
@@ -659,23 +586,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="predictions" class="level3">
 <h3 class="anchored" data-anchor-id="predictions">Predictions :</h3>
 <p>What you see below are the predictions of shape (1, 1000) that represent a tensor with output confidence scores for each of ImageNet’s 1000 classes.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/terminal_output.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/terminal_output.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="what-have-we-accomplished" class="level2">
 <h2 class="anchored" data-anchor-id="what-have-we-accomplished">What have we accomplished?</h2>
 <p>By this time, we have completed all our setup. Quite a few things were done within this article. Take a look back at the problems we set out to solve:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/tf-vertex-ai/serving_wrapper.webp" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image</figcaption><p></p>
-</figure>
-</div>
+<p><img src="./images/tf-vertex-ai/serving_wrapper.webp" class="img-fluid"></p>
 <ul>
 <li><strong>Scale</strong>: The solution we made is one that can be used in a production setting. With the capability of Vertex AI and the services for Auto-Scaling and Monitoring, you can leverage state-of-the-art tech to make sure your model is deployed in the most performant way possible.</li>
 <li><strong>Can integrate with CI/CD Pipelines</strong>: Our solution is one that can be integrated into CI/CD pipelines due to Google Artifact Registry, which can be as simple as pushing to the registry. You can make use of other GCP Services (or Vertex AI) that will allow you to orchestrate the updates automatically.</li>
@@ -733,121 +650,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
-        }
-      }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
-      return false;
-    }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  let localAlternateSentinel = 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1062,17 +864,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
-    <div class="nav-footer-left">
-      &nbsp;
-    </div>   
-    <div class="nav-footer-center">Copyright © 2023, Suvaditya Mukherjee</div>
-    <div class="nav-footer-right">
-      &nbsp;
-    </div>
-  </div>
-</footer>
 
 
 
