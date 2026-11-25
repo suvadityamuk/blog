@@ -13,6 +13,14 @@ authors:
 
 > TLDR; In this blog, we provide fine-tuning scripts and containers to fine-tune TRELLIS.2, a popular 3D model on your 3D assets, that can run both locally and on Hugging Face Jobs. If you are interested in fine-tuning, you can [use our scripts](#walkthrough) with few arguments (assuming you updated your dataset to Hugging Face Hub) or tinker with them yourself [with this repository](https://github.com/suvadityamuk/trellis2-finetuning). If you want to learn more, we go through [how the script works](#inside-the-training-pipeline). Let’s go!
 
+**Everything in this post, in one place:**
+
+- Train from your browser: [TRELLIS.2 3D LoRA Trainer](https://huggingface.co/spaces/hugging-3d/3d-model-lora-trainer) Space
+- Pick training objects from open 3D libraries: [3D Subset Builder](https://huggingface.co/spaces/hugging-3d/data-finetuning-subset-builder)
+- Let a coding agent run it for you: the [`trellis2-lora` agent skill](https://github.com/suvadityamuk/trellis2-finetuning/tree/master/skills/trellis2-lora)
+- Run TRELLIS.2 natively with our kernels for [CUDA](https://huggingface.co/kernels/suvadityamuk/trellis2-cuda), [Metal](https://huggingface.co/kernels/suvadityamuk/trellis2-metal) and [ROCm](https://huggingface.co/kernels/suvadityamuk/trellis2-rocm), and compare the CUDA C++ port with PyTorch in the [TRELLIS.2 CUDA Space](https://huggingface.co/spaces/suvadityamuk/trellis2-cuda)
+- All models, datasets and Spaces: the [TRELLIS.2 everywhere](https://huggingface.co/collections/hugging-3d/trellis2-everywhere-6b062cf7d5ae3eca49def35b) collection
+
 ## Introduction
 
 3D generation has many uses in robotics, simulation, media, and entertainment. In these fields, it is difficult to make generated objects obey strict rules and standardize model and data representations. There are many file formats, such as [GLB](https://en.wikipedia.org/wiki/GlTF) and [PLY](https://en.wikipedia.org/wiki/PLY_\(file_format\)). There are also [many representations](https://huggingface.co/spaces/suvadityamuk/3d-representations-guide), such as [neural radiance fields (NeRFs)](https://www.matthewtancik.com/nerf) and [3D Gaussian splatting (3DGS)](https://en.wikipedia.org/wiki/Gaussian_splatting). Each one has different advantages and disadvantages. 

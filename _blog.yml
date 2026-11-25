@@ -5996,6 +5996,8 @@
   tags:
     - guide
     - 3d
+    - trellis
+    - image-to-3d
     - lora
     - finetuning
     - open-source
